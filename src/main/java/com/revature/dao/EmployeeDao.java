@@ -2,7 +2,7 @@ package com.revature.dao;
 
 import java.util.List;
 
-// persistence logic hibernate logic
+// dao's are usually for persistence logic, whereas the service layer is more for the hibernate logic
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -11,40 +11,45 @@ import com.revature.util.HibernateUtil;
 
 public class EmployeeDao {
 	
-	// insert employee object by calling save() method from hibernate, return pk
+	// insert the employee object by calling the save() method from Hibernate, return the PK generated
 	public int insert(Employee e) {
 		
-		Session ses = HibernateUtil.getSession(); 
+		// grab the session object
+		Session ses = HibernateUtil.getSession(); // from hibernate
+
+		// begin a tx
+		Transaction tx = ses.beginTransaction(); // import Transaction from Hibernate
 		
-		Transaction tx = ses.beginTransaction(); 
+		// capture the pk returned
+		int pk = (int) ses.save(e);
 		
-		int pk = (int) ses.save(e); 
-		
+		// commit the tx
 		tx.commit();
 		
-		return pk; 
-		
+		// return the pk
+		return pk;
 	}
-	
+
+	// findALL() method that returns a list of Employees
 	public List<Employee> findAll() {
 		
-		Session ses = HibernateUtil.getSession(); 
+		// grab the session
+		Session ses = HibernateUtil.getSession();
 		
-		List<Employee> emps = ses.createQuery("from Employee", Employee.class).list(); 
+		// make an HQL statement 
+		List<Employee> emps  = ses.createQuery("from Employee", Employee.class).list();
 		
-		
-		return emps; 
-		
+		// return the list of employees
+		return emps;
 	}
 	
 	public boolean delete(int id) {
 		return false;
-		
 	}
 	
 	public boolean update(Employee e) {
 		return false;
-		
 	}
-
+	
+	
 }
