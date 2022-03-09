@@ -31,6 +31,7 @@ public class FrontController extends HttpServlet {
 			RequestHelper.processLogin(request, response);
 			break;
 		case "employees":
+			RequestHelper.processEmployees(request, response); 
 			// call some type of method to process that and pass the request and response objects
 			break;
 		}
